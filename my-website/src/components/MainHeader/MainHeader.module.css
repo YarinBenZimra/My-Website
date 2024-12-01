@@ -1,0 +1,58 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  height: 100px;
+}
+
+.leftSideHeader {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.nameAndRole {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.myName {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.myRole {
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+  color: #666;
+}
+
+.headerRight {
+  display: flex;
+  gap: 15px;
+  margin-right: 30px;
+}
+
+.navLink {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #333;
+}
