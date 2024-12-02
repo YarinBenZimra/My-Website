@@ -5,11 +5,12 @@ import facebookLogo from "../../assets/facebookLogo.png";
 import { useAppContext } from "../../Context/AppContext.jsx";
 
 export default function Footer() {
-  const { user, loading, error } = useAppContext();
-  if (loading) return null; // Loading Screen TODO
-  if (error) return null; // Error
+  const { user, userError } = useAppContext();
+  if (!user && !userError) return null; // Loading Screen TODO
+  if (!user && userError) return null; // Error
   return (
-    user && (
+    user &&
+    !userError && (
       <div className={styles.footer}>
         <p className={styles.copyright}>
           &copy; {new Date().getFullYear()} {user.firstName} {user.lastName}

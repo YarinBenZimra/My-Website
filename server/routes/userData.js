@@ -32,8 +32,8 @@ router.get("/projects", (req, res) => {
 
 // *ENDPOINT* ====> Get Project Details <====
 router.get("/projectDetails/:id", (req, res) => {
-  logger.info("in project details");
   const id = parseInt(req.params.id);
+  logger.info("in project details for project " + id);
   logger.debug(`Fetching project with the ID: "${id}"...`);
   const project = projectsDetails.find((p) => p.id === id);
   if (project) {

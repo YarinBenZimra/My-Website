@@ -5,12 +5,13 @@ import Navigator from "../../components/Navigator/Navigator";
 import { useAppContext } from "../../Context/AppContext";
 import NotFound from "../404NotFound/404NotFound";
 export default function AboutMe() {
-  const { user, loading, error } = useAppContext();
-  if (error) return <NotFound />;
-  if (loading) return null;
+  const { user, userError } = useAppContext();
   const { goToResume, goToProjects } = Navigator();
+  if (!user && !userError) return null; // Loading Screen TODO
+  if (!user && userError) return <NotFound />; // Error
   return (
-    user && (
+    user &&
+    !userError && (
       <section className={styles.aboutMe}>
         <div className={styles.splitSection}>
           <div className={styles.left}>

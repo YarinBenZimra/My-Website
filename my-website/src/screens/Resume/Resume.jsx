@@ -5,16 +5,18 @@ import NotFound from "../404NotFound/404NotFound";
 import { useAppContext } from "../../Context/AppContext";
 import { useEffect } from "react";
 function Resume() {
-  const { resume, fetchResume, loading, error } = useAppContext();
+  const { resume, fetchResume, resumeError } = useAppContext();
   useEffect(() => {
-    fetchResume();
-  }, [fetchResume]);
+    if (!resume) {
+      fetchResume();
+    }
+  }, [resume]);
 
-  if (loading) {
+  if (!resume && !resumeError) {
     // Loading Screen
     return <div>Loading...</div>;
   }
-  if (error) {
+  if (!resume && resumeError) {
     return <NotFound />;
   }
   const handleDownload = () => {
@@ -26,7 +28,8 @@ function Resume() {
     document.body.removeChild(link);
   };
   return (
-    resume && (
+    resume &&
+    !resumeError && (
       <div className={styles.resume}>
         <button onClick={handleDownload} className={styles.downloadButton}>
           DOWNLOAD CV

@@ -4,93 +4,81 @@ import githubLogo from "../../assets/cv-icons/githubLogo.png";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import NotFound from "../404NotFound/404NotFound";
-import { useState, useEffect } from "react";
-import { fetchUserData } from "../../../API/apiService.js";
+import { useEffect } from "react";
+import { useAppContext } from "../../Context/AppContext";
 
 export default function ProjectDetails() {
-  const [error, setError] = useState(false);
-  const [project, setProject] = useState(null);
-  const [loading, setLoading] = useState(true);
   const projectId = useParams().id;
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetchUserData(
-        `/projectDetails/${projectId}`,
-        "projectDetails"
-      );
-      if (response.error) {
-        setError(true);
-      } else {
-        response.data;
-        const data = response.data;
-        setProject(data);
-        setError(false);
-      }
-      setLoading(false);
-    };
-    if (!project) {
-      fetchData();
-    }
-  }, []);
+  const location = useLocation();
 
-  if (loading) {
+  const { projectsDetails, fetchProject, projectsDetailsError } =
+    useAppContext();
+  useEffect(() => {
+    if (!projectsDetails[projectId]) {
+      fetchProject(projectId);
+    }
+  }, [fetchProject]);
+
+  if (!projectsDetails[projectId] && !projectsDetailsError[projectId]) {
     // Loading Screen
     return <div>Loading...</div>;
   }
-  if (error) {
+  if (!projectsDetails[projectId] && projectsDetailsError[projectId]) {
     return <NotFound />;
   }
 
+  const project = projectsDetails[projectId];
   const isGitHubURL = (url) =>
     typeof url === "string" && url.startsWith("https://github.com");
 
-  const location = useLocation();
   const { projectImg } = location.state || {};
-
   return (
-    <div className={styles.ProjectDetails}>
-      <h1 className={styles.name}>{project.name}</h1>
-      <div className={styles.projImgContainer}>
-        <img className={styles.projectImg} src={projectImg} alt="" />
-      </div>
-      <h2 className={styles.description}>{project.description}</h2>
-
-      {project.video && (
-        <div className={styles.videoContainer}>
-          <video controls className={styles.video}>
-            <source src={project.video} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+    projectsDetails[projectId] &&
+    !projectsDetailsError[projectId] && (
+      <div className={styles.ProjectDetails}>
+        <h1 className={styles.name}>{project.name}</h1>
+        <div className={styles.projImgContainer}>
+          <img className={styles.projectImg} src={projectImg} alt="" />
         </div>
-      )}
+        <h2 className={styles.description}>{project.description}</h2>
 
-      {project.images && project.images.length > 0 && (
-        <PhotoProvider>
-          <div className={styles.imagesGrid}>
-            {project.images.map((image, index) => (
-              <PhotoView className={styles.image} key={index} src={image}>
-                <img
-                  className={styles.image}
-                  src={image}
-                  alt={`${project.name} - Image ${index + 1}`}
-                />
-              </PhotoView>
-            ))}
+        {project.video && (
+          <div className={styles.videoContainer}>
+            <video controls className={styles.video}>
+              <source src={project.video} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
-        </PhotoProvider>
-      )}
+        )}
 
-      {isGitHubURL(project.githubURL) && (
-        <a
-          href={project.githubURL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.githubLink}
-        >
-          <img src={githubLogo} alt="GitHub" />
-          View on GitHub
-        </a>
-      )}
-    </div>
+        {project.images && project.images.length > 0 && (
+          <PhotoProvider>
+            <div className={styles.imagesGrid}>
+              {project.images.map((image, index) => (
+                <PhotoView className={styles.image} key={index} src={image}>
+                  <img
+                    className={styles.image}
+                    src={image}
+                    alt={`${project.name} - Image ${index + 1}`}
+                  />
+                </PhotoView>
+              ))}
+            </div>
+          </PhotoProvider>
+        )}
+
+        {isGitHubURL(project.githubURL) && (
+          <a
+            href={project.githubURL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.githubLink}
+          >
+            <img src={githubLogo} alt="GitHub" />
+            View on GitHub
+          </a>
+        )}
+      </div>
+    )
   );
 }

@@ -6,22 +6,25 @@ import { useEffect } from "react";
 import NotFound from "../404NotFound/404NotFound";
 import { useAppContext } from "../../Context/AppContext";
 export default function Projects() {
-  const { projects, fetchProjects, loading, error } = useAppContext();
-  useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects, projects]);
+  const { goToProjectDetails } = Navigator();
 
-  if (loading) {
+  const { projects, fetchProjects, projectsError } = useAppContext();
+  useEffect(() => {
+    if (!projects) {
+      fetchProjects();
+    }
+  }, [fetchProjects]);
+
+  if (!projects && !projectsError) {
     // Loading Screen
     return <div>Loading...</div>;
   }
-  if (error) {
+  if (!projects && projectsError) {
     return <NotFound />;
   }
-  const { goToProjectDetails } = Navigator();
-
   return (
-    projects && (
+    projects &&
+    !projectsError && (
       <div className={styles.projects}>
         <div className={styles.grid}>
           {projects.map((project) => (

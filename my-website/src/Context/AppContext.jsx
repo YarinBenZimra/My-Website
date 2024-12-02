@@ -13,47 +13,50 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [resume, setResume] = useState(null);
   const [projects, setProjects] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [projectsDetails, setProjectsDetails] = useState({});
+  const [userError, setUserError] = useState(false);
+  const [resumeError, setResumeError] = useState(false);
+  const [projectsError, setProjectsError] = useState(false);
+  const [projectsDetailsError, setProjectsDetailsError] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetchUserData("/details", "myDetails");
-        if (response.error) {
-          setError(true);
-        } else {
-          setUser(response.data);
-          setError(false);
-        }
-      } catch (e) {
-        console.error("Failed to fetch user data:", e);
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (!user) {
-      fetchData();
-    }
+    fetchUserDetails();
   }, []);
 
+  const fetchUserDetails = useCallback(async () => {
+    if (user) return user;
+    try {
+      const response = await fetchUserData("/details", "myDetails");
+      if (response.error) {
+        setUserError(true);
+        return response.error;
+      } else {
+        setUser(response.data);
+        setUserError(false);
+        return response.data;
+      }
+    } catch (e) {
+      console.error("Failed to fetch user data:", e);
+      setUserError(true);
+      return e.error;
+    }
+  }, [user]);
+
   const fetchResume = useCallback(async () => {
-    console.log(resume);
+    console.log("Fetching resume, resume: ", resume);
     if (!resume) {
       try {
         const response = await fetchUserData("/resume", "resumeData");
+        console.log("response:", response);
         if (response.error) {
-          setError(true);
+          setResumeError(true);
         } else {
           setResume(response.data);
-          setError(false);
+          setResumeError(false);
         }
       } catch (e) {
         console.error("Failed to fetch resume data:", e);
-        setError(true);
-      } finally {
-        setLoading(false);
+        setResumeError(true);
       }
     }
   }, [resume]);
@@ -63,19 +66,49 @@ export const AppProvider = ({ children }) => {
       try {
         const response = await fetchUserData("/projects", "myProjects");
         if (response.error) {
-          setError(true);
+          setProjectsError(true);
         } else {
           setProjects(response.data);
-          setError(false);
+          setProjectsError(false);
         }
       } catch (e) {
         console.error("Failed to fetch projects data:", e);
-        setError(true);
-      } finally {
-        setLoading(false);
+        setProjectsError(true);
       }
     }
   }, [projects]);
+
+  const fetchProject = useCallback(
+    async (id) => {
+      if (!projectsDetails || !projectsDetails[id]) {
+        try {
+          const response = await fetchUserData(
+            `/projectDetails/${id}`,
+            "projectDetails"
+          );
+          if (response.error) {
+            setProjectsDetailsError((prev) => ({
+              ...prev,
+              [id]: true,
+            }));
+          } else {
+            setProjectsDetails((prev) => ({
+              ...prev,
+              [id]: response.data,
+            }));
+          }
+        } catch (e) {
+          console.error("Failed to fetch projects data:", e);
+          setProjectsDetailsError((prev) => ({
+            ...prev,
+            [id]: true,
+          }));
+        }
+      }
+      console.log(projectsDetails);
+    },
+    [projectsDetails]
+  );
 
   return (
     <AppContext.Provider
@@ -83,10 +116,14 @@ export const AppProvider = ({ children }) => {
         user,
         resume,
         projects,
-        loading,
-        error,
+        projectsDetails,
+        userError,
+        resumeError,
+        projectsError,
+        projectsDetailsError,
         fetchResume,
         fetchProjects,
+        fetchProject,
       }}
     >
       {children}
@@ -94,5 +131,4 @@ export const AppProvider = ({ children }) => {
   );
 };
 
-// Custom Hook
 export const useAppContext = () => useContext(AppContext);

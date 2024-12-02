@@ -6,11 +6,12 @@ import githubLogo from "../../assets/githubLogo.png";
 import facebookLogo from "../../assets/facebookLogo.png";
 import { useAppContext } from "../../Context/AppContext.jsx";
 export default function Card() {
-  const { user, loading, error } = useAppContext();
-  if (loading) return null; // Loading Screen TODO
-  if (error) return null; // Error
+  const { user, userError } = useAppContext();
+  if (!user && !userError) return null; // Loading Screen TODO
+  if (!user && userError) return null; // Error
   return (
-    user && (
+    user &&
+    !userError && (
       <div className={styles.card}>
         <img className={styles.image} src={profilePic} alt="Profile Picture" />
         <h2 className={styles.firstName}>{user.firstName}</h2>

@@ -13,6 +13,10 @@ export const fetchUserData = async (endpoint, dummyData) => {
     // Handle network errors or timeout
     if (error.code === "ERR_NETWORK" || error.code === "ECONNABORTED") {
       console.error("Request failed:", error.message);
+      if (dummyData == "projectDetails") {
+        const id = endpoint.split("/").pop();
+        return { status: 500, data: projectDetails[id] };
+      }
       return { status: 500, data: dummyData }; // Returning the fallback dummy data
     }
 

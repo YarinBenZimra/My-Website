@@ -6,11 +6,12 @@ import phone from "../../assets/cv-icons/phone.png";
 import mail from "../../assets/cv-icons/mail.png";
 import { useAppContext } from "../../Context/AppContext.jsx";
 export default function CVHeader() {
-  const { user, loading, error } = useAppContext();
-  if (loading) return null; // Loading Screen TODO
-  if (error) return null; // Error
+  const { user, userError } = useAppContext();
+  if (!user && !userError) return null; // Loading Screen TODO
+  if (!user && userError) return null; // Error
   return (
-    user && (
+    user &&
+    !userError && (
       <div className={styles.header}>
         <div className={styles.nameAndIcons}>
           <div className={styles.nameAndUnderline}>

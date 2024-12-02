@@ -1,7 +1,6 @@
 .projects {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   background-color: #e6dace;
   align-items: center;
 }
