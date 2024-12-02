@@ -11,12 +11,11 @@ export default function CVYearTitleDescriptionType({
   return (
     <>
       <CVHeadlineSection title={title} />
-
       <div className={direction === "row" ? styles.row : styles.column}>
-        {items.map((item) =>
+        {items.map((item, index) =>
           item.title !== "" ? (
             <div
-              key={item.id}
+              key={index + 1}
               className={styles.subItemContainer}
               style={direction === "column" ? { width: "90%" } : {}}
             >
@@ -28,21 +27,21 @@ export default function CVYearTitleDescriptionType({
                     className={styles.subItemDesc}
                     style={item.years === "" ? { marginLeft: 0 } : {}}
                   >
-                    {item.description}
+                    {item.description[0]}
                   </h3>
                 )}
                 {item.descriptionType === "ul" && (
-                  <CVUList projects={item.description} />
+                  <CVUList strList={item.description} />
                 )}
               </div>
             </div>
           ) : item.descriptionType !== "" ? (
-            <div key={item.id} className={styles.subItemNameAndDesc}>
+            <div key={index + 1} className={styles.subItemNameAndDesc}>
               {item.descriptionType === "h3" && (
-                <h3 className={styles.subItemDesc}>{item.description}</h3>
+                <h3 className={styles.subItemDesc}>{item.description[0]}</h3>
               )}
               {item.descriptionType === "ul" && (
-                <CVUList projects={item.description} />
+                <CVUList strList={item.description} />
               )}
             </div>
           ) : null

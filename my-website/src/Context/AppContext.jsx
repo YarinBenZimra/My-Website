@@ -79,33 +79,32 @@ export const AppProvider = ({ children }) => {
   }, [projects]);
 
   const fetchProject = useCallback(
-    async (id) => {
-      if (!projectsDetails || !projectsDetails[id]) {
+    async (name) => {
+      if (!projectsDetails || !projectsDetails[name]) {
         try {
           const response = await fetchUserData(
-            `/projectDetails/${id}`,
+            `/projectDetails/${name}`,
             "projectDetails"
           );
           if (response.error) {
             setProjectsDetailsError((prev) => ({
               ...prev,
-              [id]: true,
+              [name]: true,
             }));
           } else {
             setProjectsDetails((prev) => ({
               ...prev,
-              [id]: response.data,
+              [name]: response.data,
             }));
           }
         } catch (e) {
-          console.error("Failed to fetch projects data:", e);
+          console.error(`Failed to fetch data for ${name}:`, e);
           setProjectsDetailsError((prev) => ({
             ...prev,
-            [id]: true,
+            [name]: true,
           }));
         }
       }
-      console.log(projectsDetails);
     },
     [projectsDetails]
   );

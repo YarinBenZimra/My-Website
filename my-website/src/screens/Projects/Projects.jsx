@@ -27,11 +27,11 @@ export default function Projects() {
     !projectsError && (
       <div className={styles.projects}>
         <div className={styles.grid}>
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <div
-              key={project.id}
+              key={index + 1}
               className={styles.card}
-              onClick={() => goToProjectDetails(project.id, project.image)}
+              onClick={() => goToProjectDetails(project.name)}
             >
               <img
                 src={project.image}

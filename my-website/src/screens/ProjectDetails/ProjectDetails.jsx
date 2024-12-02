@@ -1,4 +1,4 @@
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./ProjectDetails.module.css";
 import githubLogo from "../../assets/cv-icons/githubLogo.png";
 import { PhotoProvider, PhotoView } from "react-photo-view";
@@ -8,37 +8,34 @@ import { useEffect } from "react";
 import { useAppContext } from "../../Context/AppContext";
 
 export default function ProjectDetails() {
-  const projectId = useParams().id;
-  const location = useLocation();
+  const projectName = useParams().name;
 
   const { projectsDetails, fetchProject, projectsDetailsError } =
     useAppContext();
   useEffect(() => {
-    if (!projectsDetails[projectId]) {
-      fetchProject(projectId);
+    if (!projectsDetails[projectName]) {
+      fetchProject(projectName);
     }
   }, [fetchProject]);
 
-  if (!projectsDetails[projectId] && !projectsDetailsError[projectId]) {
+  if (!projectsDetails[projectName] && !projectsDetailsError[projectName]) {
     // Loading Screen
     return <div>Loading...</div>;
   }
-  if (!projectsDetails[projectId] && projectsDetailsError[projectId]) {
+  if (!projectsDetails[projectName] && projectsDetailsError[projectName]) {
     return <NotFound />;
   }
 
-  const project = projectsDetails[projectId];
+  const project = projectsDetails[projectName];
   const isGitHubURL = (url) =>
     typeof url === "string" && url.startsWith("https://github.com");
-
-  const { projectImg } = location.state || {};
   return (
-    projectsDetails[projectId] &&
-    !projectsDetailsError[projectId] && (
+    projectsDetails[projectName] &&
+    !projectsDetailsError[projectName] && (
       <div className={styles.ProjectDetails}>
         <h1 className={styles.name}>{project.name}</h1>
         <div className={styles.projImgContainer}>
-          <img className={styles.projectImg} src={projectImg} alt="" />
+          <img className={styles.projectImg} src={project.image} alt="" />
         </div>
         <h2 className={styles.description}>{project.description}</h2>
 

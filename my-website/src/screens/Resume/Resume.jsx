@@ -38,10 +38,10 @@ function Resume() {
           <CVHeader />
           <section className={styles.section}>
             {resume && resume.length > 0 ? (
-              resume.map((topic) => {
+              resume.map((topic, index) => {
                 if (topic.items && topic.items.length > 0) {
                   return (
-                    <div key={topic.id} className={styles.topic}>
+                    <div key={index + 1} className={styles.topic}>
                       <CVYearTitleDescriptionType
                         title={topic.title}
                         direction={topic.direction}

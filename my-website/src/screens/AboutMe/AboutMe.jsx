@@ -34,7 +34,7 @@ export default function AboutMe() {
                   Projects
                 </button>
               </div>
-              <p className={styles.description}>{user.description}</p>
+              <p className={styles.description}>{user.aboutMeDescription}</p>
             </div>
           </div>
         </div>

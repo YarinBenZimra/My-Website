@@ -3,12 +3,13 @@
   flex-direction: column;
   background-color: #e6dace;
   align-items: center;
+  padding: 2rem;
 }
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
   gap: 1.5rem;
-  padding: 20px;
+  padding: 1rem;
   width: 100%;
 }
 

@@ -15,59 +15,26 @@ export const userDetails = {
 };
 //////////// RESUME PAGE //////////////////
 const projectsList = [
-  {
-    id: 1,
-    description:
-      "Designed and developed a cross-platform educational tool for iOS and Android to help language learners select contextually appropriate near synonyms. Collected real-world sentence examples and analyzed them using Natural Language Processing (NLP) and Large Language Models (LLM) to compute perplexity and probability, ensuring accurate synonym selection. Technologies used: React Native, Node.js, OpenAI API.",
-  },
-  {
-    id: 2,
-    description:
-      "Developed an application that uses Facebook's API and realizes design patterns using Windows Forms as windows-based user interface.",
-  },
-  {
-    id: 3,
-    description:
-      "Created an environment that simulates Facebook in a console-based user interface in C++.",
-  },
-  {
-    id: 4,
-    description:
-      "Developed a full-stack project featuring a containerized HTTP server for a TODO app in JavaScript with integrated logging capabilities using Docker, complemented by a Flutter-based task management app for iOS and Android that serves as the client for the Node.js server.",
-  },
+  "Designed and developed a cross-platform educational tool for iOS and Android to help language learners select contextually appropriate near synonyms. Collected real-world sentence examples and analyzed them using Natural Language Processing (NLP) and Large Language Models (LLM) to compute perplexity and probability, ensuring accurate synonym selection. Technologies used: React Native, Node.js, OpenAI API.",
+  "Developed an application that uses Facebook's API and realizes design patterns using Windows Forms as windows-based user interface.",
+  "Created an environment that simulates Facebook in a console-based user interface in C++.",
+  "Developed a full-stack project featuring a containerized HTTP server for a TODO app in JavaScript with integrated logging capabilities using Docker, complemented by a Flutter-based task management app for iOS and Android that serves as the client for the Node.js server.",
 ];
 const armyExperienceList = [
-  {
-    id: 1,
-    description: "Skillfully commanded and led a team of 15 soldiers.",
-  },
-  {
-    id: 2,
-    description:
-      "Completed Sergeant Course. Collaborated with senior military officer.",
-  },
-  {
-    id: 3,
-    description:
-      "Handle challenging field conditions and high-pressure situations with composure and efficiency.",
-  },
-  {
-    id: 4,
-    description:
-      "Excelled in executing special missions under tight deadlines.",
-  },
-  {
-    id: 5,
-    description: "Promoted due to excellent service.",
-  },
+  "Skillfully commanded and led a team of 15 soldiers.",
+  "Completed Sergeant Course. Collaborated with senior military officer.",
+  "Handle challenging field conditions and high-pressure situations with composure and efficiency.",
+  "Excelled in executing special missions under tight deadlines.",
+  "Promoted due to excellent service.",
 ];
 const summaryData = [
   {
     id: 1,
     years: "",
     title: "",
-    description:
+    description: [
       "Aspiring software developer with a solid academic background in computer science and hands-on experience in Full Stack Development. Holding a B.Sc. in Computer Science. I possess a strong understanding of programming, algorithms, and system design, and I am eager to contribute to a dynamic team. I am well-prepared to make an immediate impact and enthusiastic about leveraging my skills to drive technical excellence.",
+    ],
     descriptionType: "h3",
   },
 ];
@@ -76,14 +43,14 @@ const educationData = [
     id: 1,
     years: "2015-2017",
     title: "Revivim High School",
-    description: "Matriculation Certificate",
+    description: ["Matriculation Certificate"],
     descriptionType: "h3",
   },
   {
     id: 2,
     years: "2021-2024",
     title: "The Academic College of Tel Aviv-Yaffo",
-    description: "Bachelor’s Science Degree in Computer Science",
+    description: ["Bachelor’s Science Degree in Computer Science"],
     descriptionType: "h3",
   },
 ];
@@ -101,8 +68,9 @@ const experienceData = [
     id: 1,
     years: "2023-2024",
     title: "Backend Engineer",
-    description:
+    description: [
       "Designed and developed a data migration service to integrate and encapsulate data from multiple backend services created by the team. I ensured seamless collaboration between services by standardizing data formats and creating a unified data flow. Additionally, I implemented a service layer to aggregate and standardize data responses, improving consistency and accessibility. Working closely with team members, I aligned the migration service with project goals, addressed integration challenges, and ensured the timely delivery of milestones, utilizing technologies such as JavaScript, Node.js, Express, and MongoDB.",
+    ],
     descriptionType: "h3",
   },
 
@@ -192,27 +160,22 @@ export const resumeData = [
 //////////////PROJECTS PAGE ////////////////////////////////////////
 export const myProjects = [
   {
-    id: 1,
     name: "NEAR SYNONYMS",
     image: "../src/assets/projects-images/nearSynonymsProject.png",
   },
   {
-    id: 2,
     name: "TODO APP",
     image: "../src/assets/projects-images/flutterImage.png",
   },
   {
-    id: 3,
     name: "FACEBOOK",
     image: "../src/assets/projects-images/facebookProject.png",
   },
   {
-    id: 4,
     name: "GARAGE",
     image: "../src/assets/projects-images/garageProject.png",
   },
   {
-    id: 5,
     name: "Musicians-And-Musical-Instruments ",
     image: "../src/assets/projects-images/musicionsProject.png",
   },

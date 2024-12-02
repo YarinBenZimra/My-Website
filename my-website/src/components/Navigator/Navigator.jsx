@@ -5,7 +5,6 @@ export default function Navigator() {
   const goToResume = () => navigate("/resume");
   const goToProjects = () => navigate("/projects");
   const goToAbout = () => navigate("/about");
-  const goToProjectDetails = (id, image) =>
-    navigate(`/projects/${id}`, { state: { projectImg: image } });
+  const goToProjectDetails = (name) => navigate(`/projects/${name}`);
   return { goToResume, goToProjects, goToAbout, goToProjectDetails };
 }

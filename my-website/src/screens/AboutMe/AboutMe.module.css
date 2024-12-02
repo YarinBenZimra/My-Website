@@ -49,13 +49,13 @@
 .description {
   font-size: 1.2rem;
   line-height: 1.5;
-  margin-top: 10px;
 }
 
 .buttons {
   display: flex;
   gap: 15px;
   margin-top: 20px;
+  margin-bottom: 1rem;
 }
 
 .button {

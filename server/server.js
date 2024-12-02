@@ -1,13 +1,29 @@
+import "./config.js";
 import express from "express";
 import cors from "cors";
-import router from "./routes/userData.js";
+import mongoose from "mongoose";
+import getDataRouter from "./routes/userData.js";
+import postDataRouter from "./routes/postData.js";
 import logger from "./loggers.js";
 const app = express();
 const PORT = 5000;
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  logger.error("Mongo_API_KEY is undefined ");
+} else {
+  logger.info("Mongo_API_KEY loaded successfully");
+}
+
+mongoose
+  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/user", router);
+app.use("/api/user", getDataRouter);
+app.use("/api/post", postDataRouter);
 
 app.use((req, res, next) => {
   logger.info(
