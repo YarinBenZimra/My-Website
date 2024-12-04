@@ -19,6 +19,7 @@ getDataRouter.get("/details", async (req, res) => {
     logger.debug("Fetching user details...");
     return res.status(200).json(userDetails);
   } catch (error) {
+    logger.error("Failed to fetch user details", error);
     res.status(500).json({ error: "Failed to fetch user details" });
   }
 });
@@ -35,6 +36,7 @@ getDataRouter.get("/resume", async (req, res) => {
     }
     return res.status(200).json(resumeData);
   } catch (error) {
+    logger.error("Failed to fetch resume details", error);
     res.status(500).json({ error: "Failed to fetch resume" });
   }
 });

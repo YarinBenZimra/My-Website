@@ -3,7 +3,9 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import getDataRouter from "./routes/userData.js";
-import postDataRouter from "./routes/postData.js";
+import postProjectsRouter from "./routes/postData/postProjects.js";
+import postUserRouter from "./routes/postData/postUser.js";
+import postResumeRouter from "./routes/postData/postResume.js";
 import logger from "./loggers.js";
 const app = express();
 const PORT = 5000;
@@ -23,8 +25,9 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use("/api/user", getDataRouter);
-app.use("/api/post", postDataRouter);
-
+app.use("/api/post/projects", postProjectsRouter);
+app.use("/api/post/user", postUserRouter);
+app.use("/api/post/resume", postResumeRouter);
 app.use((req, res, next) => {
   logger.info(
     `Incoming request | resource: ${req.url.split("?")[0]} | HTTP Verb ${
