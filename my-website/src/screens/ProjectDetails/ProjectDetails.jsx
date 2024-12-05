@@ -6,18 +6,22 @@ import "react-photo-view/dist/react-photo-view.css";
 import NotFound from "../404NotFound/404NotFound";
 import { useEffect } from "react";
 import { useAppContext } from "../../Context/AppContext";
-
+import InternalServerError from "../500InternalServerError/500InternalServerError";
 export default function ProjectDetails() {
   const projectName = useParams().name;
-
-  const { projectsDetails, fetchProject, projectsDetailsError } =
-    useAppContext();
+  const {
+    projectsDetails,
+    fetchProject,
+    projectsDetailsError,
+    isNetworkError,
+  } = useAppContext();
   useEffect(() => {
     if (!projectsDetails[projectName]) {
       fetchProject(projectName);
     }
   }, [fetchProject]);
 
+  if (isNetworkError) return <InternalServerError />;
   if (!projectsDetails[projectName] && !projectsDetailsError[projectName]) {
     // Loading Screen
     return <div>Loading...</div>;

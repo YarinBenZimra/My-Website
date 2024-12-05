@@ -5,33 +5,65 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { fetchUserData } from "../../API/apiService";
-
+import { fetchData } from "../../API/apiService";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const [website, setWebsite] = useState(null);
   const [user, setUser] = useState(null);
   const [resume, setResume] = useState(null);
   const [projects, setProjects] = useState(null);
   const [projectsDetails, setProjectsDetails] = useState({});
+  const [websiteError, setWebsiteError] = useState(false);
   const [userError, setUserError] = useState(false);
   const [resumeError, setResumeError] = useState(false);
   const [projectsError, setProjectsError] = useState(false);
   const [projectsDetailsError, setProjectsDetailsError] = useState({});
+  const [isNetworkError, setIsNetworkError] = useState(false);
 
   useEffect(() => {
+    fetchWebsiteDetails();
     fetchUserDetails();
   }, []);
+
+  const fetchWebsiteDetails = useCallback(async () => {
+    if (website) return website;
+    try {
+      const response = await fetchData("/website");
+      if (response.error) {
+        if (response.error === "ERR_NETWORK") {
+          setIsNetworkError(true);
+        } else {
+          setWebsiteError(true);
+        }
+        return response.error;
+      } else {
+        setWebsite(response.data);
+        console.log(response.data);
+        setWebsiteError(false);
+        return response.data;
+      }
+    } catch (e) {
+      console.error("Failed to fetch website data:", e);
+      setWebsiteError(true);
+      return e.error;
+    }
+  }, [website]);
 
   const fetchUserDetails = useCallback(async () => {
     if (user) return user;
     try {
-      const response = await fetchUserData("/details", "myDetails");
+      const response = await fetchData("/details");
       if (response.error) {
-        setUserError(true);
+        if (response.error === "ERR_NETWORK") {
+          setIsNetworkError(true);
+        } else {
+          setUserError(true);
+        }
         return response.error;
       } else {
         setUser(response.data);
+        console.log(response.data);
         setUserError(false);
         return response.data;
       }
@@ -46,10 +78,14 @@ export const AppProvider = ({ children }) => {
     console.log("Fetching resume, resume: ", resume);
     if (!resume) {
       try {
-        const response = await fetchUserData("/resume", "resumeData");
-        console.log("response:", response);
+        const response = await fetchData("/resume");
         if (response.error) {
-          setResumeError(true);
+          if (response.error === "ERR_NETWORK") {
+            setIsNetworkError(true);
+          } else {
+            setResumeError(true);
+          }
+          return response.error;
         } else {
           setResume(response.data);
           setResumeError(false);
@@ -64,9 +100,14 @@ export const AppProvider = ({ children }) => {
   const fetchProjects = useCallback(async () => {
     if (!projects) {
       try {
-        const response = await fetchUserData("/projects", "myProjects");
+        const response = await fetchData("/projects");
         if (response.error) {
-          setProjectsError(true);
+          if (response.error === "ERR_NETWORK") {
+            setIsNetworkError(true);
+          } else {
+            setProjectsError(true);
+          }
+          return response.error;
         } else {
           setProjects(response.data);
           setProjectsError(false);
@@ -82,15 +123,17 @@ export const AppProvider = ({ children }) => {
     async (name) => {
       if (!projectsDetails || !projectsDetails[name]) {
         try {
-          const response = await fetchUserData(
-            `/projectDetails/${name}`,
-            "projectDetails"
-          );
+          const response = await fetchData(`/projectDetails/${name}`);
           if (response.error) {
-            setProjectsDetailsError((prev) => ({
-              ...prev,
-              [name]: true,
-            }));
+            if (response.error === "ERR_NETWORK") {
+              setIsNetworkError(true);
+            } else {
+              setProjectsDetailsError((prev) => ({
+                ...prev,
+                [name]: true,
+              }));
+            }
+            return response.error;
           } else {
             setProjectsDetails((prev) => ({
               ...prev,
@@ -112,14 +155,17 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        website,
         user,
         resume,
         projects,
         projectsDetails,
+        websiteError,
         userError,
         resumeError,
         projectsError,
         projectsDetailsError,
+        isNetworkError,
         fetchResume,
         fetchProjects,
         fetchProject,

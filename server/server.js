@@ -2,11 +2,12 @@ import "./config.js";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import getDataRouter from "./routes/userData.js";
+import getDataRouter from "./routes/getData/userData.js";
 import postProjectsRouter from "./routes/postData/postProjects.js";
 import postUserRouter from "./routes/postData/postUser.js";
 import postResumeRouter from "./routes/postData/postResume.js";
 import logger from "./loggers.js";
+
 const app = express();
 const PORT = 5000;
 const MONGO_URI = process.env.MONGO_URI;

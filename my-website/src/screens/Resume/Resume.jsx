@@ -4,14 +4,16 @@ import CVYearTitleDescriptionType from "../../components/CVYearTitleDescription/
 import NotFound from "../404NotFound/404NotFound";
 import { useAppContext } from "../../Context/AppContext";
 import { useEffect } from "react";
+import InternalServerError from "../500InternalServerError/500InternalServerError";
 function Resume() {
-  const { resume, fetchResume, resumeError } = useAppContext();
+  const { resume, fetchResume, resumeError, isNetworkError } = useAppContext();
   useEffect(() => {
     if (!resume) {
       fetchResume();
     }
   }, [resume]);
 
+  if (isNetworkError) return <InternalServerError />;
   if (!resume && !resumeError) {
     // Loading Screen
     return <div>Loading...</div>;

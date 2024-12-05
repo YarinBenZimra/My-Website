@@ -5,7 +5,7 @@
   text-align: center;
   padding: 2rem;
   color: #333;
-  background-color: #e6dace;
+  background-color: var(--main-color);
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -19,6 +19,12 @@
 .notFound p {
   font-size: 1.5rem;
   margin-top: 1rem;
+}
+.notFound img {
+  width: 15%;
+  height: auto;
+  max-width: 500px;
+  margin-bottom: 1rem;
 }
 
 .homeLink {
@@ -37,4 +43,20 @@
   background-color: #373f46;
   color: #ffffff;
   transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .notFound {
+    gap: 5rem;
+  }
+  .notFound h1 {
+    font-size: 4rem;
+  }
+
+  .notFound p {
+    font-size: 2.5rem;
+  }
+  .homeLink {
+    width: 30%;
+  }
 }

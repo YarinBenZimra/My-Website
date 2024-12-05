@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Card.module.css";
-import profilePic from "../../assets/profilePicture.jpeg";
 import linkdinLogo from "../../assets/linkdinLogo.png";
 import githubLogo from "../../assets/githubLogo.png";
 import facebookLogo from "../../assets/facebookLogo.png";
@@ -13,7 +12,7 @@ export default function Card() {
     user &&
     !userError && (
       <div className={styles.card}>
-        <img className={styles.image} src={profilePic} alt="Profile Picture" />
+        <img className={styles.image} src={user.image} alt="Profile Picture" />
         <h2 className={styles.firstName}>{user.firstName}</h2>
         <h2 className={styles.lastName}>{user.lastName}</h2>
         <div className={styles.line} />

@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   email: String,
   address: String,
   aboutMeDescription: String,
+  resumeUrl: String,
   linkedinUrl: String,
   githubUrl: String,
   facebookUrl: String,

@@ -14,8 +14,10 @@
 }
 
 .left {
-  background-color: #e6dace;
+  display: flex;
+  background-color: var(--main-color);
   width: 35%;
+  order: 1;
 }
 
 .right {
@@ -24,6 +26,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  order: 2;
 }
 
 .cardContainer {
@@ -32,37 +35,40 @@
   width: 25%;
   height: 80%;
   left: 15%;
-  z-index: 10; /* Ensure the card appears above other elements */
+  z-index: 10;
+  transform: translateY(-6.25rem);
+  transition: 1s ease-out;
+}
+.cardContainer.visible {
+  transform: translateY(0);
 }
 .rightContent {
   display: flex;
   flex-direction: column;
   padding-left: 20%;
   padding-right: 5%;
-}
-.title {
-  font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateX(-10rem);
+  transition: transform 2s ease-out, opacity 1s ease-out;
 }
 
-.description {
-  font-size: 1.2rem;
-  line-height: 1.5;
+.rightContent.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .buttons {
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 1rem;
+  margin-top: 1.25rem;
   margin-bottom: 1rem;
 }
 
 .button {
-  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   font-size: 1rem;
-  border-radius: 20px;
-  border: 2px solid #333;
+  border-radius: 1.25rem;
+  border: 0.125rem solid #333;
   background: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -76,5 +82,55 @@
 
 .button:hover {
   transform: scale(1.1);
-  border-color: #007bff;
+  border-color: #535bf2;
+}
+.button.primary:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid #535bf2;
+}
+@media (max-width: 768px) {
+  .left {
+    background-color: var(--main-color);
+    width: 60%;
+    order: 1;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .right {
+    background-color: #ffffff;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    order: 2;
+  }
+
+  .cardContainer {
+    position: static;
+    width: 95%;
+    height: auto;
+  }
+  .rightContent {
+    text-align: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-bottom: 20%;
+  }
+  .title {
+    font-size: 7.143rem;
+  }
+
+  .description {
+    font-size: 1.7rem;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+
+  .button {
+    font-size: 2rem;
+    border-radius: 2rem;
+  }
 }

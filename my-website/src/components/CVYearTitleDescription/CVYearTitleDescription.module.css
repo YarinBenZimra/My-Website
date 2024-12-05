@@ -36,3 +36,8 @@
   font-weight: 100;
   margin-left: 1.313rem;
 }
+@media (max-width: 768px) {
+  :root {
+    font-size: 7.5px !important;
+  }
+}

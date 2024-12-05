@@ -7,7 +7,7 @@ const logFormat = printf(({ level, message, timestamp }) => {
 });
 
 const logger = winston.createLogger({
-  level: "info" || LOG_LEVEL,
+  level: LOG_LEVEL || "info",
   format: combine(timestamp({ format: "DD/MM/YYYY HH:mm:ss" }), logFormat),
   transports: [
     new winston.transports.Console({

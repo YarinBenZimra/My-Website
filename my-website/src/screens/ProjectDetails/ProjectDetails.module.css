@@ -5,7 +5,7 @@
   text-align: center;
   padding: 1rem;
   padding-top: 5rem;
-  background-color: #e6dace;
+  background-color: var(--main-color);
 }
 
 .name {
@@ -48,7 +48,7 @@
 
 .imagesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr));
   gap: 1rem;
   margin: 2rem 0;
   padding: 2rem;
@@ -60,11 +60,11 @@
 
 .image {
   width: 100%;
-  max-width: 300px;
+  max-width: 18.75rem;
   height: auto;
   border-radius: 1rem;
   object-fit: cover;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 3.5rem 3.5rem;
   transition: transform 0.3s ease;
 }
 
@@ -116,4 +116,10 @@
 .notFound p {
   font-size: 1rem;
   color: #666;
+}
+
+@media (max-width: 768px) {
+  :root {
+    font-size: 10px;
+  }
 }

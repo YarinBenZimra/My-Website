@@ -4,10 +4,18 @@ import Card from "../../components/Card/Card";
 import Navigator from "../../components/Navigator/Navigator";
 import { useAppContext } from "../../Context/AppContext";
 import NotFound from "../404NotFound/404NotFound";
+import InternalServerError from "../500InternalServerError/500InternalServerError";
+import { useInView } from "react-intersection-observer";
+
 export default function AboutMe() {
-  const { user, userError } = useAppContext();
   const { goToResume, goToProjects } = Navigator();
-  if (!user && !userError) return null; // Loading Screen TODO
+  const { user, userError, isNetworkError } = useAppContext();
+  const [cardRef, cardInView] = useInView({ triggerOnce: true });
+  const [rightContentRef, rightContentInView] = useInView({
+    triggerOnce: true,
+  });
+  if (isNetworkError) return <InternalServerError />;
+  if (!user && !userError) return; // Loading Screen TODO
   if (!user && userError) return <NotFound />; // Error
   return (
     user &&
@@ -15,12 +23,22 @@ export default function AboutMe() {
       <section className={styles.aboutMe}>
         <div className={styles.splitSection}>
           <div className={styles.left}>
-            <div className={styles.cardContainer}>
+            <div
+              className={`${styles.cardContainer} ${
+                cardInView ? styles.visible : ""
+              }`}
+              ref={cardRef}
+            >
               <Card />
             </div>
           </div>
           <div className={styles.right}>
-            <div className={styles.rightContent}>
+            <div
+              className={`${styles.rightContent}  ${
+                rightContentInView && styles.visible
+              }`}
+              ref={rightContentRef}
+            >
               <h1 className={styles.title}>Hello</h1>
               <p className={styles.description}>Here's who I am & what I do</p>
               <div className={styles.buttons}>

@@ -5,16 +5,20 @@ import comingSoon from "../../assets/projects-images/comingSoon.jpg";
 import { useEffect } from "react";
 import NotFound from "../404NotFound/404NotFound";
 import { useAppContext } from "../../Context/AppContext";
+import InternalServerError from "../500InternalServerError/500InternalServerError";
+
 export default function Projects() {
   const { goToProjectDetails } = Navigator();
 
-  const { projects, fetchProjects, projectsError } = useAppContext();
+  const { projects, fetchProjects, projectsError, isNetworkError } =
+    useAppContext();
   useEffect(() => {
     if (!projects) {
       fetchProjects();
     }
   }, [fetchProjects]);
 
+  if (isNetworkError) return <InternalServerError />;
   if (!projects && !projectsError) {
     // Loading Screen
     return <div>Loading...</div>;

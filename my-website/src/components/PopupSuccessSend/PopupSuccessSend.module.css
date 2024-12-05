@@ -13,13 +13,13 @@
 .popup {
   background: #fff;
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 0.625rem;
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.3);
   text-align: center;
   width: 90%;
-  max-width: 400px;
+  max-width: 25rem;
   z-index: 1001;
-  background-color: #e6dace;
+  background-color: var(--main-color);
 }
 
 .headline {
@@ -38,7 +38,7 @@
 }
 .button {
   padding: 0.1rem 1rem;
-  border-radius: 5px;
+  border-radius: 0.313rem;
   background-color: #ffffff;
   color: "black";
   cursor: pointer;
@@ -46,10 +46,10 @@
 .image {
   width: 10%;
   height: auto;
-  max-width: 500px;
+  max-width: 31.25rem;
   margin: 0 auto;
   display: block;
-  padding-bottom: 20px;
+  padding-bottom: 1.25rem;
 }
 .button:hover {
   border: none;

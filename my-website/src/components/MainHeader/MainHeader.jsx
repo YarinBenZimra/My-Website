@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./MainHeader.module.css";
-import logo from "../../assets/bLogo.jpg";
 import { useAppContext } from "../../Context/AppContext.jsx";
 import { Link } from "react-router-dom";
-export default function MainHeader() {
+import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
+export default function MainHeader({ logo }) {
   const { user, userError } = useAppContext();
   if (!user && !userError) return null; // Loading Screen TODO
   if (!user && userError) return null; // Error
@@ -19,8 +19,11 @@ export default function MainHeader() {
             <p className={styles.myName}>
               {user.firstName} {user.lastName}
             </p>
-            <p className={styles.myRole}>{user.role}</p>
+            <p className={styles.myRole}>/ {user.role}</p>
           </div>
+        </div>
+        <div className={styles.hamburgerMenu}>
+          <HamburgerMenu />
         </div>
         <nav className={styles.headerRight}>
           <Link to="/about" className={styles.navLink}>
