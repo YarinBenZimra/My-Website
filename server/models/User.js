@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
   linkedinUrl: String,
   githubUrl: String,
   facebookUrl: String,
+  sendEmailUrl: String,
 });
 const User = mongoose.model("User", userSchema);
 export default User;

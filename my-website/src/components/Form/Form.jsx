@@ -1,8 +1,15 @@
 import { useState } from "react";
 import styles from "./Form.module.css";
 import errorIcon from "../../assets/contact-icons/error.png";
-import PopupSuccessSend from "../PopupSuccessSend/PopupSuccessSend";
+import PopupSendEmail from "../PopupSendEmail/PopupSendEmail";
+import { sendEmail } from "../../../API/apiService";
+import { useAppContext } from "../../Context/AppContext";
+
 export default function Form() {
+  const { user, userError, isNetworkError } = useAppContext();
+  if (isNetworkError) return <InternalServerError />;
+  if (!user && !userError) return <Loading />;
+  if (!user && userError) return <NotFound />;
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -12,6 +19,8 @@ export default function Form() {
   });
   const [errors, setErrors] = useState({});
   const [isVisiblePopup, setIsVisiblePopup] = useState(false);
+  const [isSuccessSend, setIsSuccessSend] = useState(false);
+
   const validateForm = () => {
     const newErrors = {};
     if (!formData.firstName.trim()) {
@@ -44,21 +53,43 @@ export default function Form() {
       [name]: value,
     }));
   };
-  const handleSend = (e) => {
-    e.preventDefault();
-    const newErrors = validateForm();
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      // TODO: Send form data to the server
-      console.log("Form submitted successfully!");
-      setIsVisiblePopup(true);
-    } else {
+  const handleSend = async (e) => {
+    if (user) {
+      e.preventDefault();
+      const newErrors = validateForm();
       setErrors(newErrors);
+      if (Object.keys(newErrors).length === 0 && user.sendEmailUrl) {
+        try {
+          const response = await sendEmail(user.sendEmailUrl, formData);
+          setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            message: "",
+          });
+          if (!response.error) {
+            setIsVisiblePopup(true);
+            setIsSuccessSend(true);
+          } else {
+            setIsVisiblePopup(true);
+            setIsSuccessSend(false);
+          }
+        } catch (e) {
+          setIsVisiblePopup(true);
+          setIsSuccessSend(false);
+        }
+      } else {
+        setErrors(newErrors);
+      }
     }
-  }; //TODO
+  };
+
   const handleClosePopup = () => {
     setIsVisiblePopup(false);
+    setIsSuccessSend(false);
   };
+
   return (
     <>
       <form className={styles.form}>
@@ -155,11 +186,19 @@ export default function Form() {
           </button>
         </div>
       </form>
-      {isVisiblePopup && (
-        <PopupSuccessSend
+      {isVisiblePopup && isSuccessSend && (
+        <PopupSendEmail
           headline="Success!"
           content="Your message has been sent successfully!"
           image="../src/assets/contact-icons/checked.png"
+          onClick={handleClosePopup}
+        />
+      )}
+      {isVisiblePopup && !isSuccessSend && (
+        <PopupSendEmail
+          headline="Error!"
+          content="Failed to send the message. Please try again later."
+          image="../src/assets/contact-icons/errorSending.png"
           onClick={handleClosePopup}
         />
       )}

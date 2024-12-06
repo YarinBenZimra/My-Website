@@ -7,6 +7,8 @@ import NotFound from "../404NotFound/404NotFound";
 import { useEffect } from "react";
 import { useAppContext } from "../../Context/AppContext";
 import InternalServerError from "../500InternalServerError/500InternalServerError";
+import { useInView } from "react-intersection-observer";
+import Loading from "../Loading/Loading";
 export default function ProjectDetails() {
   const projectName = useParams().name;
   const {
@@ -15,6 +17,17 @@ export default function ProjectDetails() {
     projectsDetailsError,
     isNetworkError,
   } = useAppContext();
+  const [nameRef, nameInView] = useInView({ triggerOnce: true });
+  const [descriptionRef, descriptionInView] = useInView({
+    triggerOnce: true,
+  });
+  const [projImgContainerRef, projImgContainerInView] = useInView({
+    triggerOnce: true,
+  });
+  const [videoContainerRef, videoContainerInView] = useInView({
+    triggerOnce: true,
+  });
+  const [imagesGridRef, imagesGridInView] = useInView({ triggerOnce: true });
   useEffect(() => {
     if (!projectsDetails[projectName]) {
       fetchProject(projectName);
@@ -23,8 +36,7 @@ export default function ProjectDetails() {
 
   if (isNetworkError) return <InternalServerError />;
   if (!projectsDetails[projectName] && !projectsDetailsError[projectName]) {
-    // Loading Screen
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   if (!projectsDetails[projectName] && projectsDetailsError[projectName]) {
     return <NotFound />;
@@ -37,14 +49,36 @@ export default function ProjectDetails() {
     projectsDetails[projectName] &&
     !projectsDetailsError[projectName] && (
       <div className={styles.ProjectDetails}>
-        <h1 className={styles.name}>{project.name}</h1>
-        <div className={styles.projImgContainer}>
+        <h1
+          className={`${styles.name} ${nameInView ? styles.visible : ""}`}
+          ref={nameRef}
+        >
+          {project.name}
+        </h1>
+        <div
+          className={`${styles.projImgContainer} ${
+            projImgContainerInView ? styles.visible : ""
+          }`}
+          ref={projImgContainerRef}
+        >
           <img className={styles.projectImg} src={project.image} alt="" />
         </div>
-        <h2 className={styles.description}>{project.description}</h2>
+        <h2
+          className={`${styles.description} ${
+            descriptionInView ? styles.visible : ""
+          }`}
+          ref={descriptionRef}
+        >
+          {project.description}
+        </h2>
 
         {project.video && (
-          <div className={styles.videoContainer}>
+          <div
+            className={`${styles.videoContainer} ${
+              videoContainerInView ? styles.visible : ""
+            }`}
+            ref={videoContainerRef}
+          >
             <video controls className={styles.video}>
               <source src={project.video} type="video/mp4" />
               Your browser does not support the video tag.
@@ -54,7 +88,12 @@ export default function ProjectDetails() {
 
         {project.images && project.images.length > 0 && (
           <PhotoProvider>
-            <div className={styles.imagesGrid}>
+            <div
+              className={`${styles.imagesGrid} ${
+                imagesGridInView ? styles.visible : ""
+              }`}
+              ref={imagesGridRef}
+            >
               {project.images.map((image, index) => (
                 <PhotoView className={styles.image} key={index} src={image}>
                   <img

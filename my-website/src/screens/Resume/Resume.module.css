@@ -55,7 +55,24 @@ li {
   flex-direction: column;
   padding: 0;
 }
+@keyframes showUp {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
+.downloadButton.visible {
+  animation: showUp 1.2s ease-out;
+}
+
+.a4.visible {
+  animation: showUp 1.5s;
+}
 @media (max-width: 768px) {
   .a4 {
     width: 92%;

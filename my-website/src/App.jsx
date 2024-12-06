@@ -12,6 +12,7 @@ import NotFound from "./screens/404NotFound/404NotFound";
 import { useAppContext } from "./Context/AppContext";
 import styles from "./App.module.css";
 import InternalServerError from "./screens/500InternalServerError/500InternalServerError";
+import Loading from "./screens/Loading/Loading";
 function App() {
   const { website, websiteError, isNetworkError } = useAppContext();
   if (isNetworkError) return <InternalServerError />;
@@ -27,8 +28,7 @@ function App() {
       );
     }
   }, [website]);
-  if (!website && !websiteError) return null; // Loading Screen TODO
-  if (!website && websiteError) return null; // Error
+  if (!website && !websiteError) return <Loading />;
   return (
     website &&
     !websiteError && (

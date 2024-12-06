@@ -6,9 +6,11 @@ import { useEffect } from "react";
 import NotFound from "../404NotFound/404NotFound";
 import { useAppContext } from "../../Context/AppContext";
 import InternalServerError from "../500InternalServerError/500InternalServerError";
-
+import { useInView } from "react-intersection-observer";
+import Loading from "../Loading/Loading";
 export default function Projects() {
   const { goToProjectDetails } = Navigator();
+  const [gridRef, gridInView] = useInView({ triggerOnce: true });
 
   const { projects, fetchProjects, projectsError, isNetworkError } =
     useAppContext();
@@ -20,8 +22,7 @@ export default function Projects() {
 
   if (isNetworkError) return <InternalServerError />;
   if (!projects && !projectsError) {
-    // Loading Screen
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   if (!projects && projectsError) {
     return <NotFound />;
@@ -30,7 +31,10 @@ export default function Projects() {
     projects &&
     !projectsError && (
       <div className={styles.projects}>
-        <div className={styles.grid}>
+        <div
+          className={`${styles.grid} ${gridInView ? styles.visible : ""}`}
+          ref={gridRef}
+        >
           {projects.map((project, index) => (
             <div
               key={index + 1}

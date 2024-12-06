@@ -6,7 +6,7 @@ import getDataRouter from "./routes/getData/userData.js";
 import postProjectsRouter from "./routes/postData/postProjects.js";
 import postUserRouter from "./routes/postData/postUser.js";
 import postResumeRouter from "./routes/postData/postResume.js";
-import logger from "./loggers.js";
+import { logger } from "./loggers.js";
 
 const app = express();
 const PORT = 5000;
@@ -19,7 +19,7 @@ if (!MONGO_URI) {
 }
 
 mongoose
-  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO_URI)
   .then(() => console.log("MongoDB connected successfully"))
   .catch((err) => console.error("MongoDB connection error:", err));
 

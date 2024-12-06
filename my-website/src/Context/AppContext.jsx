@@ -39,12 +39,10 @@ export const AppProvider = ({ children }) => {
         return response.error;
       } else {
         setWebsite(response.data);
-        console.log(response.data);
         setWebsiteError(false);
         return response.data;
       }
     } catch (e) {
-      console.error("Failed to fetch website data:", e);
       setWebsiteError(true);
       return e.error;
     }
@@ -63,19 +61,16 @@ export const AppProvider = ({ children }) => {
         return response.error;
       } else {
         setUser(response.data);
-        console.log(response.data);
         setUserError(false);
         return response.data;
       }
     } catch (e) {
-      console.error("Failed to fetch user data:", e);
       setUserError(true);
       return e.error;
     }
   }, [user]);
 
   const fetchResume = useCallback(async () => {
-    console.log("Fetching resume, resume: ", resume);
     if (!resume) {
       try {
         const response = await fetchData("/resume");
@@ -91,7 +86,6 @@ export const AppProvider = ({ children }) => {
           setResumeError(false);
         }
       } catch (e) {
-        console.error("Failed to fetch resume data:", e);
         setResumeError(true);
       }
     }
@@ -113,7 +107,6 @@ export const AppProvider = ({ children }) => {
           setProjectsError(false);
         }
       } catch (e) {
-        console.error("Failed to fetch projects data:", e);
         setProjectsError(true);
       }
     }
@@ -141,7 +134,6 @@ export const AppProvider = ({ children }) => {
             }));
           }
         } catch (e) {
-          console.error(`Failed to fetch data for ${name}:`, e);
           setProjectsDetailsError((prev) => ({
             ...prev,
             [name]: true,

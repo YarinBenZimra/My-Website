@@ -6,7 +6,7 @@ import { useAppContext } from "../../Context/AppContext";
 import NotFound from "../404NotFound/404NotFound";
 import InternalServerError from "../500InternalServerError/500InternalServerError";
 import { useInView } from "react-intersection-observer";
-
+import Loading from "../Loading/Loading";
 export default function AboutMe() {
   const { goToResume, goToProjects } = Navigator();
   const { user, userError, isNetworkError } = useAppContext();
@@ -15,8 +15,8 @@ export default function AboutMe() {
     triggerOnce: true,
   });
   if (isNetworkError) return <InternalServerError />;
-  if (!user && !userError) return; // Loading Screen TODO
-  if (!user && userError) return <NotFound />; // Error
+  if (!user && !userError) return <Loading />;
+  if (!user && userError) return <NotFound />;
   return (
     user &&
     !userError && (

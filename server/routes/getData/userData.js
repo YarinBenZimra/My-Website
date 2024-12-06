@@ -3,7 +3,7 @@ import User from "../../models/User.js";
 import Projects from "../../models/Projects.js";
 import Resume from "../../models/Resume.js";
 import Website from "../../models/Website.js";
-import logger from "../../loggers.js";
+import { logger } from "../../loggers.js";
 
 const getDataRouter = express.Router();
 const mapProjects = (projects) => {

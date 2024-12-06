@@ -5,8 +5,12 @@ import NotFound from "../404NotFound/404NotFound";
 import { useAppContext } from "../../Context/AppContext";
 import { useEffect } from "react";
 import InternalServerError from "../500InternalServerError/500InternalServerError";
+import { useInView } from "react-intersection-observer";
+import Loading from "../Loading/Loading";
 function Resume() {
   const { resume, fetchResume, resumeError, isNetworkError } = useAppContext();
+  const [buttonRef, buttonInView] = useInView({ triggerOnce: true });
+  const [a4Ref, a4InView] = useInView({ triggerOnce: true });
   useEffect(() => {
     if (!resume) {
       fetchResume();
@@ -15,8 +19,7 @@ function Resume() {
 
   if (isNetworkError) return <InternalServerError />;
   if (!resume && !resumeError) {
-    // Loading Screen
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   if (!resume && resumeError) {
     return <NotFound />;
@@ -33,10 +36,14 @@ function Resume() {
     resume &&
     !resumeError && (
       <div className={styles.resume}>
-        <button onClick={handleDownload} className={styles.downloadButton}>
+        <button
+          onClick={handleDownload}
+          className={`${styles.downloadButton} ${styles.visible}`}
+          ref={buttonRef}
+        >
           DOWNLOAD CV
         </button>
-        <div className={styles.a4}>
+        <div className={`${styles.a4} ${styles.visible}`} ref={a4Ref}>
           <CVHeader />
           <section className={styles.section}>
             {resume && resume.length > 0 ? (

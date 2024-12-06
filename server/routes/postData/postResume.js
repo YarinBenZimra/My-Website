@@ -1,10 +1,12 @@
 import express from "express";
 import Resume from "../../models/Resume.js";
-import logger from "../../loggers.js";
+import { postLogger } from "../../loggers.js";
 import { checkApiKey } from "../../utils.js";
+import { postRequest } from "../../utils.js";
 
 const postResumeRouter = express.Router();
 postResumeRouter.use(checkApiKey);
+postResumeRouter.use(postRequest);
 
 // *ENDPOINT* ====> Add New Resume <====
 postResumeRouter.post("/addSection", async (req, res) => {
@@ -12,7 +14,7 @@ postResumeRouter.post("/addSection", async (req, res) => {
     const newSection = new Resume(req.body);
     await newSection.save();
     res.status(201).json(newSection);
-    logger.info("New section added successfully to the resume");
+    postLogger.info("New section added successfully to the resume");
   } catch (error) {
     res.status(500).json({ error: "Failed to add section" });
   }
@@ -21,17 +23,20 @@ postResumeRouter.post("/addSection", async (req, res) => {
 // *ENDPOINT* ====> Delete Section in Resume <====
 postResumeRouter.delete("/deleteSection/:name", async (req, res) => {
   const sectionName = req.params.name;
-  logger.info("Request Delete section with name: " + sectionName);
+  postLogger.info("Request Delete section with name: " + sectionName);
   try {
     const section = await Resume.findOneAndDelete({ title: sectionName });
     if (!section) {
-      logger.debug(`Section not found with name: ${sectionName}`);
+      postLogger.debug(`Section not found with name: ${sectionName}`);
       return res.status(404).json({ message: "Section not found" });
     }
-    logger.debug(`Section deleted successfully: ${section.name}`);
+    postLogger.debug(`Section deleted successfully: ${section.name}`);
     res.json({ message: "Section deleted successfully" });
   } catch (error) {
-    logger.error(`Failed to delete section with name: ${sectionName}`, error);
+    postLogger.error(
+      `Failed to delete section with name: ${sectionName}`,
+      error
+    );
     res.status(500).json({ message: "Failed to delete section" });
   }
 });
@@ -62,13 +67,13 @@ postResumeRouter.patch("/updateSection/:name", async (req, res) => {
       }
     );
     if (!updatedSection) {
-      logger.debug(`Section not found with name: ${sectionName}`);
+      postLogger.debug(`Section not found with name: ${sectionName}`);
       return res.status(404).json({ message: "Section not found" });
     }
-    logger.info(`Section field "${field}" updated successfully`);
+    postLogger.info(`Section field "${field}" updated successfully`);
     res.status(200).json(updatedSection);
   } catch (error) {
-    logger.error("Failed to update section", error);
+    postLogger.error("Failed to update section", error);
     return res.status(500).json({ message: "Failed to update section" });
   }
 });
