@@ -13,6 +13,7 @@ import { useAppContext } from "./Context/AppContext";
 import styles from "./App.module.css";
 import InternalServerError from "./screens/500InternalServerError/500InternalServerError";
 import Loading from "./screens/Loading/Loading";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 function App() {
   const { website, websiteError, isNetworkError } = useAppContext();
   if (isNetworkError) return <InternalServerError />;
@@ -35,6 +36,7 @@ function App() {
       <div className={styles.appContainer}>
         <MainHeader logo={website.logo} />
         <div className={styles.content}>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<AboutMe />} />
             <Route path="/about" element={<AboutMe />} />

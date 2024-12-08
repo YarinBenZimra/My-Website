@@ -19,7 +19,11 @@ export default function Card() {
         <p className={styles.description}>{user.role}</p>
         <div className={styles.footer}>
           <div className={styles.imgsContainer}>
-            <a href={user.linkdinUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={user.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={linkdinLogo} alt="LinkedIn Logo" />
             </a>
             <a href={user.githubUrl} target="_blank" rel="noopener noreferrer">

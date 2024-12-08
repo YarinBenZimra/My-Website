@@ -22,7 +22,11 @@ export default function CVHeader() {
             <div className={styles.underline}></div>
           </div>
           <div className={styles.socialIcons}>
-            <a href={user.linkdinUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={user.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img
                 className={styles.linkedinIcon}
                 src={linkdinLogo}

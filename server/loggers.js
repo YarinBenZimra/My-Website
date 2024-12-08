@@ -30,7 +30,7 @@ export const logger = winston.createLogger({
 });
 
 export const postLogger = winston.createLogger({
-  level: "warning",
+  level: "debug",
   format: combine(timestamp({ format: "DD/MM/YYYY HH:mm:ss" }), logFormat),
   transports: [
     new winston.transports.Console({

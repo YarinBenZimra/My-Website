@@ -46,7 +46,7 @@ postUserRouter.patch("/updateUser/:id", async (req, res) => {
     const userId = req.params.id;
     const { field, content } = req.body;
 
-    if (!field.trim() || !content.trim()) {
+    if (!field.trim() || !content) {
       return res.status(400).json({ error: "Field and content are required" });
     }
 
@@ -56,7 +56,7 @@ postUserRouter.patch("/updateUser/:id", async (req, res) => {
       field === "facebookUrl"
     ) {
       const regexUrl = /^https?:\/\/(github|linkedin|facebook)\.com\/\S+/;
-      if (!regexUrl.test(content.trim())) {
+      if (!regexUrl.test(content)) {
         postLogger.debug("Received invalid URL");
         return res.status(400).json({ error: "Invalid URL" });
       }
@@ -64,7 +64,7 @@ postUserRouter.patch("/updateUser/:id", async (req, res) => {
 
     if (field === "email") {
       const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!regexEmail.test(content.trim())) {
+      if (!regexEmail.test(content)) {
         postLogger.debug("Received invalid email");
         return res.status(400).json({ error: "Invalid email" });
       }

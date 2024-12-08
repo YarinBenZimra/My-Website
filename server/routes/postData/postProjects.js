@@ -44,12 +44,12 @@ postProjectsRouter.patch("/updateProject/:name", async (req, res) => {
   try {
     const projName = req.params.name;
     const { field, content } = req.body;
-    if (!field.trim() || !content.trim()) {
+    if (!field.trim() || !content) {
       return res.status(400).json({ error: "Field and content are required" });
     }
     if (field === "githubUrl") {
       const regexUrl = /^https?:\/\/github\.com\/\S+/;
-      if (!regexUrl.test(content.trim())) {
+      if (!regexUrl.test(content)) {
         postLogger.debug("Received invalid GitHub URL");
         return res.status(400).json({ error: "Invalid GitHub URL" });
       }

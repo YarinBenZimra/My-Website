@@ -47,7 +47,7 @@ postResumeRouter.patch("/updateSection/:name", async (req, res) => {
   try {
     const sectionName = req.params.name;
     const { field, content } = req.body;
-    if (!field.trim() || !content.trim()) {
+    if (!field.trim() || !content) {
       return res.status(400).json({ error: "Field and content are required" });
     }
     if (field === "direction") {

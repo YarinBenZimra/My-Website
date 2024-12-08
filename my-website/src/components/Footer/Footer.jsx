@@ -32,7 +32,7 @@ export default function Footer() {
           </a>
         </p>
         <div className={styles.socialMedia}>
-          <a href={user.linkdinUrl} target="_blank" rel="noopener noreferrer">
+          <a href={user.linkedinUrl} target="_blank" rel="noopener noreferrer">
             <img src={linkdinLogo} alt="LinkedIn Logo" />
           </a>
           <a href={user.githubUrl} target="_blank" rel="noopener noreferrer">

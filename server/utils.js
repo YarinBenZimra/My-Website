@@ -17,3 +17,22 @@ export const postRequest = (req, res, next) => {
   );
   next();
 };
+const json = {
+  name: "NEAR SYNONYMS",
+  image:
+    "https://yarinbenzimra-website-media.s3.eu-north-1.amazonaws.com/assets…",
+  description:
+    "This is a comprehensive project simulating the functionality of a social networking platform. The application includes features like user and fan page management, status updates, and relationships, built with advanced C++ principles including STL, inheritance, polymorphism, and file handling.",
+  githubUrl: "https://github.com/NearSynonyms/NearSynonymsProject",
+  video:
+    "https://yarinbenzimra-website-media.s3.eu-north-1.amazonaws.com/assets…",
+  images: [
+    "https://yarinbenzimra-website-media.s3.eu-north-1.amazonaws.com/assets…",
+
+    "https://yarinbenzimra-website-media.s3.eu-north-1.amazonaws.com/assets…",
+
+    "https://yarinbenzimra-website-media.s3.eu-north-1.amazonaws.com/assets…",
+
+    "https://yarinbenzimra-website-media.s3.eu-north-1.amazonaws.com/assets…",
+  ],
+};
