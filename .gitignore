@@ -1,0 +1,10 @@
+# Ignore node_modules in both folders
+my-website/node_modules/
+server/node_modules/
+
+# Ignore .env files
+my-website/.env
+server/.env
+
+# Ignore build files (for frontend, during development)
+my-website/build/
