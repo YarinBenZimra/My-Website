@@ -36,6 +36,9 @@ body {
   padding: 0;
   padding-top: 1rem;
   width: 100%;
+}
+html,
+body {
   overflow-x: hidden;
 }
 

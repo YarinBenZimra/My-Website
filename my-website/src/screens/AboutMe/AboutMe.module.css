@@ -17,7 +17,6 @@
   display: flex;
   background-color: var(--main-color);
   width: 35%;
-  order: 1;
 }
 
 .right {
@@ -26,7 +25,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  order: 2;
 }
 
 .cardContainer {
@@ -93,7 +91,6 @@
   .left {
     background-color: var(--main-color);
     width: 60%;
-    order: 1;
     align-items: center;
     justify-content: center;
   }
@@ -103,12 +100,12 @@
     width: 40%;
     display: flex;
     flex-direction: column;
-    order: 2;
+    padding: 1rem;
   }
 
   .cardContainer {
     position: static;
-    width: 95%;
+    width: 85%;
     height: auto;
   }
   .rightContent {
@@ -123,6 +120,9 @@
 
   .description {
     font-size: 1.7rem;
+  }
+  .aboutMeDescription {
+    font-size: 1.5rem;
   }
 
   .buttons {

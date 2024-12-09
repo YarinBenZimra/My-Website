@@ -41,20 +41,24 @@ export default function Projects() {
               className={styles.card}
               onClick={() => goToProjectDetails(project.name)}
             >
-              <img
-                src={project.image}
-                alt={project.name}
-                className={styles.image}
-              />
+              <div className={styles.imageContainer}>
+                <img
+                  src={project.image}
+                  alt={project.name}
+                  className={styles.image}
+                />
+              </div>
               <h3 className={styles.title}>{project.name}</h3>
             </div>
           ))}
           <div className={styles.card} key={projects.length + 1}>
-            <img
-              src={comingSoon}
-              alt={"Coming Soon"}
-              className={styles.image}
-            />
+            <div className={styles.imageContainer}>
+              <img
+                src={comingSoon}
+                alt={"Coming Soon"}
+                className={styles.image}
+              />
+            </div>
             <h3 className={styles.title}>Coming Soon</h3>
           </div>
         </div>

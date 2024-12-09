@@ -8,7 +8,8 @@ import InternalServerError from "../500InternalServerError/500InternalServerErro
 import { useInView } from "react-intersection-observer";
 import Loading from "../Loading/Loading";
 function Resume() {
-  const { resume, fetchResume, resumeError, isNetworkError } = useAppContext();
+  const { user, resume, fetchResume, resumeError, isNetworkError } =
+    useAppContext();
   const [buttonRef, buttonInView] = useInView({ triggerOnce: true });
   const [a4Ref, a4InView] = useInView({ triggerOnce: true });
   useEffect(() => {
@@ -25,25 +26,34 @@ function Resume() {
     return <NotFound />;
   }
   const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = "/AA- Yarin Benzimra Resume.pdf";
-    link.download = "AA-Yarin_Benzimra_Resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (user && user.resumeUrl) {
+      const link = document.createElement("a");
+      link.href = user.resumeUrl;
+      link.download = "AA-Yarin_Benzimra_Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
   return (
     resume &&
     !resumeError && (
       <div className={styles.resume}>
-        <button
-          onClick={handleDownload}
-          className={`${styles.downloadButton} ${styles.visible}`}
-          ref={buttonRef}
+        {user && (
+          <button
+            onClick={handleDownload}
+            className={`${styles.downloadButton} ${
+              buttonInView ? styles.visible : ""
+            }`}
+            ref={buttonRef}
+          >
+            DOWNLOAD CV
+          </button>
+        )}
+        <div
+          className={`${styles.a4} ${a4InView ? styles.visible : ""}`}
+          ref={a4Ref}
         >
-          DOWNLOAD CV
-        </button>
-        <div className={`${styles.a4} ${styles.visible}`} ref={a4Ref}>
           <CVHeader />
           <section className={styles.section}>
             {resume && resume.length > 0 ? (

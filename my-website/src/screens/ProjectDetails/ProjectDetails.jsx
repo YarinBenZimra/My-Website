@@ -107,9 +107,9 @@ export default function ProjectDetails() {
           </PhotoProvider>
         )}
 
-        {isGitHubURL(project.githubURL) && (
+        {isGitHubURL(project.githubUrl) && (
           <a
-            href={project.githubURL}
+            href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.githubLink}

@@ -52,7 +52,9 @@ export default function AboutMe() {
                   Projects
                 </button>
               </div>
-              <p className={styles.description}>{user.aboutMeDescription}</p>
+              <p className={styles.aboutMeDescription}>
+                {user.aboutMeDescription}
+              </p>
             </div>
           </div>
         </div>

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styles from "./Form.module.css";
 import errorIcon from "../../assets/contact-icons/error.png";
+import faildSendEmail from "../../assets/contact-icons/errorSending.png";
+import successSendEmail from "../../assets/contact-icons/checked.png";
 import PopupSendEmail from "../PopupSendEmail/PopupSendEmail";
 import { sendEmail } from "../../../API/apiService";
 import { useAppContext } from "../../Context/AppContext";
@@ -190,7 +192,7 @@ export default function Form() {
         <PopupSendEmail
           headline="Success!"
           content="Your message has been sent successfully!"
-          image="../src/assets/contact-icons/checked.png"
+          image={successSendEmail}
           onClick={handleClosePopup}
         />
       )}
@@ -198,7 +200,7 @@ export default function Form() {
         <PopupSendEmail
           headline="Error!"
           content="Failed to send the message. Please try again later."
-          image="../src/assets/contact-icons/errorSending.png"
+          image={faildSendEmail}
           onClick={handleClosePopup}
         />
       )}

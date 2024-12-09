@@ -4,7 +4,7 @@ const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/user`;
 export const fetchData = async (endpoint) => {
   try {
     const response = await axios.get(`${API_BASE_URL}${endpoint}`, {
-      timeout: 5000,
+      timeout: 60000,
     });
     return { status: 200, data: response.data };
   } catch (error) {
@@ -28,7 +28,7 @@ export const sendEmail = async (sendEmailURL, formData) => {
         phone: formData.phone,
         message: formData.message,
       },
-      { timeout: 5000 }
+      { timeout: 60000 }
     );
     return { status: 200, data: response.data };
   } catch (error) {
