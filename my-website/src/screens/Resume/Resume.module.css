@@ -77,4 +77,9 @@ li {
   .a4 {
     width: 92%;
   }
+  @media (min-height: 820px) {
+    .resume {
+      height: 100vh;
+    }
+  }
 }
