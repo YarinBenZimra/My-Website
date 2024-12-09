@@ -41,6 +41,9 @@ html,
 body {
   overflow-x: hidden;
 }
+body {
+  overflow-y: hidden;
+}
 
 h1 {
   font-size: 3.2rem;
